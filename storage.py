@@ -1,12 +1,22 @@
 import json
+import hashlib
 from pathlib import Path
 from datetime import datetime
 from typing import Mapping, Any
 
 RESULTS_PATH = Path("data/survey.ndjson")
 
+def sha256(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
 def append_json_line(record: Mapping[str, Any]) -> None:
     RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    record = dict(record)  # don’t mutate caller’s dict
+    if "email" in record and record["email"]:
+        record["email"] = sha256(record["email"])
+    if "age" in record and record["age"] is not None:
+        record["age"] = sha256(str(record["age"]))
+
     with RESULTS_PATH.open("a", encoding="utf-8") as f:
         f.write(
             json.dumps(
