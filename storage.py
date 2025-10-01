@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Mapping, Any
 from datetime import datetime
 
-RESULTS_PATH = Path("data") / "results.jsonl"
+RESULTS_PATH = Path("data/survey.ndjson")
 
 def sha256(value: str) -> str:
     """Return hex digest of a string’s SHA256."""
