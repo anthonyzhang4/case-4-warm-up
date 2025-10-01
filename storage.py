@@ -13,7 +13,7 @@ def append_json_line(record: Mapping[str, Any]) -> None:
     RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
     record = dict(record)  # don’t mutate caller’s dict
     if "email" in record and record["email"]:
-        record["email"] = sha256(record["email"])
+        record["email"] = sha256(str(record["email"]))
     if "age" in record and record["age"] is not None:
         record["age"] = sha256(str(record["age"]))
 
