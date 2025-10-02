@@ -8,6 +8,8 @@ RESULTS_PATH = Path("data/survey.ndjson")
 
 def sha256(value: str) -> str:
     """Return hex digest of a string’s SHA256."""
+    if not isinstance(value, str):
+        value = str(value)
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 def append_json_line(record: Mapping[str, Any]) -> None:
